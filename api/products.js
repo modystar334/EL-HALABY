@@ -1,9 +1,15 @@
-const fs = require("fs");
-const path = require("path");
+module.exports = async (req, res) => {
+  try {
+    const response = await fetch(
+      "https://raw.githubusercontent.com/modystar334/EL-HALABY/main/data/products.json"
+    );
 
-module.exports = (req, res) => {
-  const filePath = path.join(process.cwd(), "data", "products.json");
-  const products = JSON.parse(fs.readFileSync(filePath, "utf8"));
+    const products = await response.json();
 
-  res.status(200).json(products);
+    res.status(200).json(products);
+  } catch (error) {
+    res.status(500).json({
+      error: "Failed to load products"
+    });
+  }
 };
