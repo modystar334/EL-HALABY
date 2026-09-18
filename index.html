@@ -2174,6 +2174,15 @@ const DELIVERY_FEE = 35;
 
 let products = [];
 
+   fetch("/api/products")
+    .then(response => response.json())
+    .then(data => {
+        products = data;
+        renderProducts();
+    })
+    .catch(error => {
+        console.error("Error loading products:", error);
+    });
 
 /* =====================================================
    CART
