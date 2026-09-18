@@ -1224,14 +1224,36 @@ function saveProduct(){
     }
 
 
-    renderAdminProducts();
+fetch("/api/products", {
+    method: "POST",
+    headers: {
+        "Content-Type": "application/json"
+    },
+    body: JSON.stringify(products)
+})
+.then(response => response.json())
+.then(data => {
 
-    closeProductModal();
+    if (data.success) {
 
-    alert(
-        "تم الحفظ داخل لوحة التحكم"
-    );
+        renderAdminProducts();
+        closeProductModal();
 
+        alert("تم حفظ التعديل بنجاح");
+
+    } else {
+
+        alert("حصل خطأ في الحفظ");
+
+    }
+
+})
+.catch(error => {
+
+    console.error(error);
+    alert("حصل خطأ في الاتصال بالسيرفر");
+
+});
 }
 
 
